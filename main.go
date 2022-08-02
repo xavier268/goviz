@@ -2,31 +2,39 @@ package main
 
 import (
 	"fmt"
-	"go/parser"
-	"go/token"
 )
 
 func main() {
 
-	dir := "../myprolog/pcontext"
-	/*
-		path, err := filepath.Abs(dir)
-		if err != nil {
-			panic(err)
-		}
-	*/
-
+	dir := "../myprolog"
 	fmt.Printf("Looking into %s\n", dir)
 
-	fileset := token.NewFileSet()
-
-	pkmap, err := parser.ParseDir(fileset, dir, nil, 0)
+	_, pkgs, err := Parse(dir)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(pkmap)
-	for k, v := range pkmap {
-		fmt.Printf("%v --> %#v\n", k, v)
+
+	for k, p := range pkgs {
+		fmt.Println(k)
+		for f, ff := range p.Files {
+			fmt.Println("\t", f)
+			fmt.Println("\t\t")
+			for _, imp := range ff.Imports {
+				fmt.Printf("\t\timport %v\n", imp.Path.Value)
+			}
+			fmt.Println("\t\t")
+			for _, obj := range ff.Scope.Objects {
+				fmt.Printf("\t\t%v %v\n", obj.Kind, obj.Name)
+				switch o := obj.Decl.(type) {
+				default:
+					fmt.Printf("\t\t\t%T : %v\n", o, o)
+
+				}
+			}
+			fmt.Println("\t\t")
+
+		}
+		fmt.Println()
 
 	}
 
