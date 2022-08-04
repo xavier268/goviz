@@ -4,8 +4,11 @@ Create graphs of package dependencies, generating a graph file in the **graphviz
 
 ## Typical use
 
+
+To analyse a projetct and all the packages it contains :
+
 ```
-go run . -i "../path/to/a/directory/" -f -e && dot -Tsvg out.dot > out.svg && firefox out.svg
+go run . -i "../path/to/my/project/" -f -e && dot -Tsvg out.dot > out.svg && firefox out.svg
 ```
 
 ## Getting help 
