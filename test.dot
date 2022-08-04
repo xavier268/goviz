@@ -1,0 +1,5 @@
+strict digraph {
+    a -> b
+    a -> c
+    c -> a [ color=blue ]
+}
