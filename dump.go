@@ -8,28 +8,26 @@ import (
 // Dump output a text representation of thr pkgs content.
 func Dump(pkgs map[string]*ast.Package) {
 
-	for k, p := range pkgs {
-		fmt.Println(k, p.Files, p.Imports, p.Name)
-		for f, ff := range p.Files {
-			fmt.Println("\t", f)
-			fmt.Println("\t\t")
-			for _, imp := range ff.Imports {
-				fmt.Printf("\t\timport %v\n", imp.Path.Value)
-			}
-			fmt.Println("\t\t")
-			for _, obj := range ff.Scope.Objects {
-				fmt.Printf("\t\t%v %v\n", obj.Kind, obj.Name)
-				switch o := obj.Decl.(type) {
-				default:
-					fmt.Printf("\t\t\t%T : %v\n", o, o)
-
-				}
-			}
-			fmt.Println("\t\t")
-
+	pps := AnalysePackages(pkgs)
+	for p, pp := range pps {
+		fmt.Print(p)
+		if pp.Local {
+			fmt.Println(" (local package)")
+		} else {
+			fmt.Println(" (external package)")
 		}
-		fmt.Println()
-
+		if len(pp.Imports) != 0 {
+			fmt.Println("\tImports :\t")
+			for x := range pp.Imports {
+				fmt.Println("\t\t", x)
+			}
+		}
+		if len(pp.Files) != 0 {
+			fmt.Println("\tFiles   :\t")
+			for x := range pp.Files {
+				fmt.Println("\t\t", x)
+			}
+		}
 	}
 
 }

@@ -1,11 +1,24 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 )
 
+var (
+	FlagExternal bool // Flag to show external packages or not
+	FlagFiles    bool // Flag to show files in packages
+)
+
+func init() {
+	flag.BoolVar(&FlagExternal, "e", false, "Show external packages.")
+	flag.BoolVar(&FlagFiles, "f", false, "Show program file names.")
+}
+
 func main() {
+
+	flag.Parse()
 
 	dir := "../myprolog"
 	fmt.Printf("Looking into %s\n", dir)
@@ -22,6 +35,6 @@ func main() {
 	}
 	defer of.Close()
 
-	DrawPackages(of, pkgs)
+	DrawPackages(of, AnalysePackages(pkgs))
 
 }
