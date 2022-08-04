@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"go/ast"
 	"io"
+	"path/filepath"
+	"strings"
 	"time"
 )
 
@@ -15,10 +17,17 @@ func DrawPackages(of io.Writer, pkgs map[string]*ast.Package) {
 	fmt.Fprintln(of, "strict digraph {")
 	defer fmt.Fprintln(of, "}")
 
-	for _, p := range pkgs {
+	for pname, p := range pkgs {
 		for _, ff := range p.Files {
 			for _, imp := range ff.Imports {
-				fmt.Fprintf(of, "%q -> %s\n", p.Name, imp.Path.Value)
+				base := filepath.Base(imp.Path.Value)
+				base = strings.Trim(base, "\"")            // remove quotes
+				if strings.Contains(imp.Path.Value, "/") { // local packages
+					fmt.Fprintf(of, "%q -> %q [color=blue]\n", pname, base)
+				} else { // std packages
+					fmt.Fprintf(of, "%q -> %q [color=red]\n", pname, base)
+				}
+
 			}
 		}
 	}

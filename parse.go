@@ -27,6 +27,7 @@ func Parse(dir string) (fset *token.FileSet, pkgs map[string]*ast.Package, err e
 				if err != nil {
 					return err
 				}
+				// merge with previous information ...
 				for k, v := range pkmap {
 					pkgs[k] = v
 				}
