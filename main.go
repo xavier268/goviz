@@ -9,6 +9,7 @@ import (
 
 var (
 	FlagHelp       bool   // Flag to show help and version info.
+	FlagTest       bool   // Flag to include test files.
 	FlagVerbose    bool   // Flag to print verbose output.
 	FlagExternal   bool   // Flag to show external packages or not
 	FlagFiles      bool   // Flag to show files in packages
@@ -16,13 +17,14 @@ var (
 	FlagOutputFile string // Define the output file
 	FlagVersion    bool   // print version information
 
-	VERSION   = "0.3.4"
+	VERSION   = "0.3.5"
 	COPYRIGHT = "(c) 2022 Xavier Gandilot (aka xavier268)"
 )
 
 func init() {
 	wd, _ := os.Getwd()
 	flag.BoolVar(&FlagVerbose, "v", false, "Print verbose debugging information.")
+	flag.BoolVar(&FlagTest, "t", false, "Include test files (*_test.go).")
 	flag.BoolVar(&FlagExternal, "e", false, "Show external packages.")
 	flag.BoolVar(&FlagFiles, "f", false, "Show program file names.")
 	flag.BoolVar(&FlagHelp, "h", false, "Show this help instructions and exit.")

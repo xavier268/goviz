@@ -12,6 +12,8 @@ import (
 // Recursively parse provided dir and sub-dirs for go files.
 func Parse(dir string) (fset *token.FileSet, pkgs map[string]*ast.Package, err error) {
 
+	var pkmap map[string]*ast.Package
+
 	fset = token.NewFileSet()
 	pkgs = make(map[string]*ast.Package)
 	err = filepath.WalkDir(dir,
@@ -23,7 +25,11 @@ func Parse(dir string) (fset *token.FileSet, pkgs map[string]*ast.Package, err e
 				if d.Name()[0] == '.' {
 					return filepath.SkipDir
 				}
-				pkmap, err := parser.ParseDir(fset, path, skipTests, 0)
+				if FlagTest {
+					pkmap, err = parser.ParseDir(fset, path, nil, 0)
+				} else {
+					pkmap, err = parser.ParseDir(fset, path, skipTests, 0)
+				}
 				if err != nil {
 					return err
 				}

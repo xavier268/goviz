@@ -20,17 +20,18 @@ go run . -h
 
 Graphical dependency analysis for Golang packages
 (c) 2022 Xavier Gandilot (aka xavier268)
-Version     :   0.3.4
+Version     :   0.3.5
 dot version :   dot - graphviz version 2.48.0 (0)
-Typical use :   go run . -e -f  && dot -Tsvg out.dot > out.svg && firefox out.svg
+Typical use :   go run . -e -f -o a.dot && dot -Tsvg a.dot > a.svg && firefox a.svg
   -V    Display version information and exit.
   -e    Show external packages.
   -f    Show program file names.
   -h    Show this help instructions and exit.
   -i string
-        Top level input directory to analyse. (default to current working directory)
+        Top level input directory to analyse. (default "/home/xavier/Desktop/goviz")
   -o string
         Output file in .dot (graphviz) format. (default "out.dot")
+  -t    Include test files (*_test.go).
   -v    Print verbose debugging information.
 ```
 
