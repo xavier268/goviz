@@ -32,10 +32,10 @@ func DrawPackages(of io.Writer, pps map[string]Package) {
 			}
 		}
 		if p.Local {
-			fmt.Fprintf(of, "%q [style=filled fillcolor=green label=%q];\n", p.Name, strings.Join(files, "\n"))
+			fmt.Fprintf(of, "%q [style=filled fillcolor=green label=%q]\n", p.Name, strings.Join(files, "\n"))
 		} else {
 			if FlagExternal {
-				fmt.Fprintf(of, "%q [style=dashed];\n", p.Name)
+				fmt.Fprintf(of, "%q [style=dashed]\n", p.Name)
 			}
 		}
 	}
@@ -43,8 +43,12 @@ func DrawPackages(of io.Writer, pps map[string]Package) {
 	fmt.Fprintln(of, "\n// edge definitions")
 	for pname, p := range pps {
 		for imp := range p.Imports {
-			if pps[imp].Local || FlagExternal {
-				fmt.Fprintf(of, "%q -> %q ;\n", pname, imp)
+			if pps[imp].Local {
+				fmt.Fprintf(of, "%q -> %q \n", pname, imp)
+			} else {
+				if FlagExternal {
+					fmt.Fprintf(of, "%q -> %q [style=dashed]\n", pname, imp)
+				}
 			}
 		}
 	}
