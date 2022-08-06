@@ -8,10 +8,10 @@ Create graphs of package dependencies, generating a graph file in the **graphviz
 ## Typical use
 
 
-To analyse a projetct and all the packages it contains :
+To analyse a project and all the packages it contains :
 
 ```
-go run . -i "../path/to/my/project/" -f -e && dot -Tsvg out.dot > out.svg && firefox out.svg
+go run . -i "../path/to/my/project/" -f -e | dot -Tsvg > out.svg && firefox out.svg
 ```
 
 ## Getting help 
@@ -21,19 +21,18 @@ Use the -h option to get help :
 ```
 go run . -h
 
+
 Graphical dependency analysis for Golang packages
 (c) 2022 Xavier Gandilot (aka xavier268)
-Version     :   0.3.5
+Version     :   0.4.1
 dot version :   dot - graphviz version 2.48.0 (0)
-Typical use :   go run . -e -f -o a.dot && dot -Tsvg a.dot > a.svg && firefox a.svg
+Typical use :   go run . -i "../path/to/my/project/" -f -e | dot -Tsvg | inkscape -p -g
   -V    Display version information and exit.
   -e    Show external packages.
   -f    Show program file names.
   -h    Show this help instructions and exit.
   -i string
         Top level input directory to analyse. (default "/home/xavier/Desktop/goviz")
-  -o string
-        Output file in .dot (graphviz) format. (default "out.dot")
   -t    Include test files (*_test.go).
   -v    Print verbose debugging information.
 ```
