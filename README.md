@@ -11,7 +11,7 @@ Create graphs of package dependencies, generating a graph file in the **graphviz
 To analyse a project and all the packages it contains :
 
 ```
-go run . -i "../path/to/my/project/" -f -e | dot -Tsvg > out.svg && firefox out.svg
+go run . -i "../path/to/my/project/" -f -e | dot -Tsvg | inkscape -p -g
 ```
 
 ## Getting help 
